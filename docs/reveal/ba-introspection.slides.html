@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
 
-<title>geoenrichment-introspection slides</title>
+<title>ba-introspection slides</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13207,7 +13207,15 @@ a.anchor-link {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Enrich-Introspection">Enrich Introspection<a class="anchor-link" href="#Enrich-Introspection">&#182;</a></h1><p>Whether working with locally installed data or connected to a GIS object instance, the first step in performing data enrichment is figuring out what is possible, what you <em>can</em> do. This begins with figuring out which countries are available to you, and what variables are available in the country you are interested in working in.</p>
+<h1 id="Business-Analyst-Introspection">Business Analyst Introspection<a class="anchor-link" href="#Business-Analyst-Introspection">&#182;</a></h1><p>The first step in using ArcGIS Business Analyst for data enrichment is figuring out what is possible, what you <em>can</em> do. This begins with selecting a soruce, figuring out which countries are available from the given source, and discovering what variables are available in the country you are interested in working in.</p>
+
+</div>
+</div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="The-BusinessAnalyst-object">The <code>BusinessAnalyst</code> object<a class="anchor-link" href="#The-BusinessAnalyst-object">&#182;</a></h2><p>Business Analyst functionality can be accessed throughout the ArcGIS Platform from a variety of sources. These sources are either locally or through a Web GIS. The <code>BusinessAnalyst</code> object, when instantiated, selects the source automatically or honors the <code>source</code> input parameter to set it explicitly.</p>
 
 </div>
 </div>
@@ -13217,8 +13225,7 @@ a.anchor-link {
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">arcgis.gis</span> <span class="kn">import</span> <span class="n">GIS</span>
-<span class="kn">from</span> <span class="nn">arcgis.geoenrichment</span> <span class="kn">import</span> <span class="n">Country</span><span class="p">,</span> <span class="n">get_countries</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">arcgis.geoenrichment</span> <span class="kn">import</span> <span class="n">BusinessAnalyst</span> <span class="k">as</span> <span class="n">BA</span>
 </pre></div>
 
     </div>
@@ -13229,15 +13236,7 @@ a.anchor-link {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Discovering-Countries">Discovering Countries<a class="anchor-link" href="#Discovering-Countries">&#182;</a></h2><p>Data enrichment is available across the entire ArcGIS Platform. As a result, there are a variety of data sources available both local and Web GIS. Local enrichment requires ArcGIS Pro with Business Analyst and local data to be installed. Enrichment with a Web GIS requires access to an ArcGIS Enterprise environment with Business Analyst or access to ArcGIS Online.</p>
-
-</div>
-</div>
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>If working in an environment with ArcGIS Pro with the Business Analyst extension and local data, you can explicitly specify this when discovering countries.</p>
+<h3 id="Local-Business-Analyst-Source">Local Business Analyst Source<a class="anchor-link" href="#Local-Business-Analyst-Source">&#182;</a></h3><p>The <code>BusinessAnalyst</code> object can explicitly be set to reference local resources using the <code>local</code> keyword for the first input parameter, <code>source</code>. Utilizing local resources requires the Python environment to have <code>arcpy</code> installed referencing ArcGIS Pro with Business Analyst and local data for at least one Country installed.</p>
 
 </div>
 </div>
@@ -13247,7 +13246,9 @@ a.anchor-link {
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">get_countries</span><span class="p">(</span><span class="s1">&#39;local&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ba_lcl</span> <span class="o">=</span> <span class="n">BA</span><span class="p">(</span><span class="s1">&#39;local&#39;</span><span class="p">)</span>
+
+<span class="n">ba_lcl</span>
 </pre></div>
 
     </div>
@@ -13264,64 +13265,9 @@ a.anchor-link {
 
 
 
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>iso2</th>
-      <th>iso3</th>
-      <th>country_name</th>
-      <th>vintage</th>
-      <th>country_id</th>
-      <th>data_source_id</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>CA</td>
-      <td>CAN</td>
-      <td>Canada</td>
-      <td>2020</td>
-      <td>CAN_ESRI_2019</td>
-      <td>LOCAL;;CAN_ESRI_2019</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>US</td>
-      <td>USA</td>
-      <td>United States</td>
-      <td>2019</td>
-      <td>USA_ESRI_2019</td>
-      <td>LOCAL;;USA_ESRI_2019</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>US</td>
-      <td>USA</td>
-      <td>United States</td>
-      <td>2020</td>
-      <td>USA_ESRI_2020</td>
-      <td>LOCAL;;USA_ESRI_2020</td>
-    </tr>
-  </tbody>
-</table>
-</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;BusinessAnalyst (local)&gt;</pre>
 </div>
 
 </div>
@@ -13333,7 +13279,53 @@ a.anchor-link {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The function is intelligent as well. If you do not explicitly set a source, the function first attempts to use local resources. If this is not possible, the function tries to utlize the <code>active_gis</code> a <code>GIS</code> object instance already instantiated in the session.</p>
+<h3 id="Web-GIS-BusinessAnalyst-Source">Web GIS <code>BusinessAnalyst</code> Source<a class="anchor-link" href="#Web-GIS-BusinessAnalyst-Source">&#182;</a></h3><p>A Web GIS can also be used with the <code>BusinessAnalyst</code> object in the form of a <code>GIS</code> object instance enabling access to either an Enterprise GIS or ArcGIS Online. If using an Enterprise GIS, Enrichment must be configured in the settings. This can either reference ArcGIS Online or a configured Business Analyst server.</p>
+
+</div>
+</div>
+</div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">arcgis.gis</span> <span class="kn">import</span> <span class="n">GIS</span>
+<span class="n">gis</span> <span class="o">=</span> <span class="n">GIS</span><span class="p">()</span>  <span class="c1"># connecting to ArcGIS Online as an anonymous user</span>
+
+<span class="n">ba_gis</span> <span class="o">=</span> <span class="n">BA</span><span class="p">(</span><span class="n">gis</span><span class="p">)</span>
+
+<span class="n">ba_gis</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[4]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;BusinessAnalyst (GIS @ https://www.arcgis.com version:9.1)&gt;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div></div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Implicit-BusinessAnalyst-Source">Implicit <code>BusinessAnalyst</code> Source<a class="anchor-link" href="#Implicit-BusinessAnalyst-Source">&#182;</a></h3><p>When instantiating the <code>BusinessAnalyst</code> object, it is not imperative to explicitly set the <code>source</code>. If left blank, it will attempt to set the source to <code>local</code> if Pro with Business Analyst is available, or utlize the <code>active_gis</code> if this has been set in the Python session.</p>
 
 </div>
 </div>
@@ -13343,7 +13335,9 @@ a.anchor-link {
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">get_countries</span><span class="p">()</span>  <span class="c1"># uses local since I have this environment configured</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ba_impl</span> <span class="o">=</span> <span class="n">BA</span><span class="p">()</span>  <span class="c1"># since I have Pro with BA, Enrichment defaults to local</span>
+
+<span class="n">ba_impl</span>
 </pre></div>
 
     </div>
@@ -13360,6 +13354,54 @@ a.anchor-link {
 
 
 
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;BusinessAnalyst (local)&gt;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div></div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Discovering-Countries">Discovering Countries<a class="anchor-link" href="#Discovering-Countries">&#182;</a></h2><p>Both configurations enable discovering what countries are available using idential syntax.</p>
+
+</div>
+</div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Local-Country-Introspection">Local Country Introspection<a class="anchor-link" href="#Local-Country-Introspection">&#182;</a></h3>
+</div>
+</div>
+</div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ba_lcl</span><span class="o">.</span><span class="n">countries</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[5]:</div>
+
+
+
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
 <style scoped>
@@ -13429,18 +13471,16 @@ a.anchor-link {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Both of these are overridden when explicitly passing in a source so it is possible to interrogate any source explicitly.</p>
-
+<h3 id="Web-GIS-Country-Introspection">Web GIS Country Introspection<a class="anchor-link" href="#Web-GIS-Country-Introspection">&#182;</a></h3>
 </div>
 </div>
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">gis</span> <span class="o">=</span> <span class="n">GIS</span><span class="p">()</span>  <span class="c1"># anonymous connection to ArcGIS Online</span>
-<span class="n">get_countries</span><span class="p">(</span><span class="n">gis</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ba_gis</span><span class="o">.</span><span class="n">countries</span>
 </pre></div>
 
     </div>
@@ -13453,7 +13493,7 @@ a.anchor-link {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[4]:</div>
+    <div class="prompt output_prompt">Out[6]:</div>
 
 
 
@@ -13599,94 +13639,15 @@ a.anchor-link {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Working-in-a-Country">Working in a Country<a class="anchor-link" href="#Working-in-a-Country">&#182;</a></h2><p>Currently the <code>Country</code> object is how most data is organized in Business Analyst. Consequently, to enrich data, the first step is creating a <code>Country</code> object instance using a source.</p>
+<h2 id="Enrich-Variable-Introspection">Enrich Variable Introspection<a class="anchor-link" href="#Enrich-Variable-Introspection">&#182;</a></h2><p>Currently most data is organized in Business Analyst by country. Consequently, before discovering what variables are available for enrichment, a <code>Country</code> must be retrieved from the <code>BusinessAnalyst</code> object. The syntax is idential whether using <code>local</code> or a<code>GIS</code> object instance as the source.</p>
 
 </div>
 </div>
-</div><div class="fragment">
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">usa_gis</span> <span class="o">=</span> <span class="n">Country</span><span class="p">(</span><span class="s1">&#39;USA&#39;</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="n">gis</span><span class="p">)</span>
-
-<span class="n">usa_gis</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[5]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>&lt;Country - USA (GIS @ https://www.arcgis.com version:9.1)&gt;</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div></div></section></section><section><section>
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>A <code>Country</code> instance, just like with country discovery, tries to use local and then an active GIS instance. Since I have a local environment configured, it references local data for the most current year's data available (2020).</p>
-
-</div>
-</div>
-</div><div class="fragment">
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">usa_lcl</span> <span class="o">=</span> <span class="n">Country</span><span class="p">(</span><span class="s1">&#39;USA&#39;</span><span class="p">)</span>
-
-<span class="n">usa_lcl</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[6]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>&lt;Country - USA 2020 (local)&gt;</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div></div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>With a local source, frequently due to modeling against older datasets, there is a need to explicitly access older data. This is supported using the <code>year</code> parameter.</p>
-
+<h3 id="Local-Country-Instantiation">Local Country Instantiation<a class="anchor-link" href="#Local-Country-Instantiation">&#182;</a></h3>
 </div>
 </div>
 </div><div class="fragment">
@@ -13695,9 +13656,9 @@ a.anchor-link {
 <div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">usa_lcl_2019</span> <span class="o">=</span> <span class="n">Country</span><span class="p">(</span><span class="s1">&#39;USA&#39;</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s1">&#39;local&#39;</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="mi">2019</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">usa_lcl</span> <span class="o">=</span> <span class="n">ba_lcl</span><span class="o">.</span><span class="n">get_country</span><span class="p">(</span><span class="s1">&#39;USA&#39;</span><span class="p">)</span>
 
-<span class="n">usa_lcl_2019</span>
+<span class="n">usa_lcl</span>
 </pre></div>
 
     </div>
@@ -13716,7 +13677,7 @@ a.anchor-link {
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;Country - USA 2019 (local)&gt;</pre>
+<pre>&lt;Country - USA 2020 (local)&gt;</pre>
 </div>
 
 </div>
@@ -13728,15 +13689,7 @@ a.anchor-link {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Enrich-Variable-Introspection">Enrich Variable Introspection<a class="anchor-link" href="#Enrich-Variable-Introspection">&#182;</a></h2><p>Once a country is instantiated, data available for enrichment can be discovered. Whether the source is local or a GIS instance, the process is the same. Also, there are some differences in the specific columns returned based on the source due to differences in what is returned from the underlying interrogation methods.</p>
-
-</div>
-</div>
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="ArcGIS-Online-Enrich-Variable-Introspection">ArcGIS Online Enrich Variable Introspection<a class="anchor-link" href="#ArcGIS-Online-Enrich-Variable-Introspection">&#182;</a></h3>
+<h3 id="Web-GIS-Country-Introspection">Web GIS Country Introspection<a class="anchor-link" href="#Web-GIS-Country-Introspection">&#182;</a></h3>
 </div>
 </div>
 </div><div class="fragment">
@@ -13745,7 +13698,9 @@ a.anchor-link {
 <div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">usa_gis</span><span class="o">.</span><span class="n">enrich_variables</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">usa_gis</span> <span class="o">=</span> <span class="n">ba_gis</span><span class="o">.</span><span class="n">get_country</span><span class="p">(</span><span class="s1">&#39;USA&#39;</span><span class="p">)</span>
+
+<span class="n">usa_gis</span>
 </pre></div>
 
     </div>
@@ -13762,161 +13717,9 @@ a.anchor-link {
 
 
 
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>name</th>
-      <th>alias</th>
-      <th>data_collection</th>
-      <th>enrich_name</th>
-      <th>enrich_field_name</th>
-      <th>description</th>
-      <th>vintage</th>
-      <th>units</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>AGE0_CY</td>
-      <td>2020 Population Age &lt;1</td>
-      <td>1yearincrements</td>
-      <td>1yearincrements.AGE0_CY</td>
-      <td>F1yearincrements_AGE0_CY</td>
-      <td>2020 Total Population Age &lt;1 (Esri)</td>
-      <td>2020</td>
-      <td>count</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>AGE1_CY</td>
-      <td>2020 Population Age 1</td>
-      <td>1yearincrements</td>
-      <td>1yearincrements.AGE1_CY</td>
-      <td>F1yearincrements_AGE1_CY</td>
-      <td>2020 Total Population Age 1 (Esri)</td>
-      <td>2020</td>
-      <td>count</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>AGE2_CY</td>
-      <td>2020 Population Age 2</td>
-      <td>1yearincrements</td>
-      <td>1yearincrements.AGE2_CY</td>
-      <td>F1yearincrements_AGE2_CY</td>
-      <td>2020 Total Population Age 2 (Esri)</td>
-      <td>2020</td>
-      <td>count</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>AGE3_CY</td>
-      <td>2020 Population Age 3</td>
-      <td>1yearincrements</td>
-      <td>1yearincrements.AGE3_CY</td>
-      <td>F1yearincrements_AGE3_CY</td>
-      <td>2020 Total Population Age 3 (Esri)</td>
-      <td>2020</td>
-      <td>count</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>AGE4_CY</td>
-      <td>2020 Population Age 4</td>
-      <td>1yearincrements</td>
-      <td>1yearincrements.AGE4_CY</td>
-      <td>F1yearincrements_AGE4_CY</td>
-      <td>2020 Total Population Age 4 (Esri)</td>
-      <td>2020</td>
-      <td>count</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>18394</th>
-      <td>MOEMEDYRMV</td>
-      <td>2019 Median Year Householder Moved In MOE (ACS...</td>
-      <td>yearmovedin</td>
-      <td>yearmovedin.MOEMEDYRMV</td>
-      <td>yearmovedin_MOEMEDYRMV</td>
-      <td>2019 Median Year Householder Moved into Unit M...</td>
-      <td>2015-2019</td>
-      <td>count</td>
-    </tr>
-    <tr>
-      <th>18395</th>
-      <td>RELMEDYRMV</td>
-      <td>2019 Median Year Householder Moved In REL (ACS...</td>
-      <td>yearmovedin</td>
-      <td>yearmovedin.RELMEDYRMV</td>
-      <td>yearmovedin_RELMEDYRMV</td>
-      <td>2019 Median Year Householder Moved into Unit R...</td>
-      <td>2015-2019</td>
-      <td>count</td>
-    </tr>
-    <tr>
-      <th>18396</th>
-      <td>ACSOWNER</td>
-      <td>2019 Owner Households (ACS 5-Yr)</td>
-      <td>yearmovedin</td>
-      <td>yearmovedin.ACSOWNER</td>
-      <td>yearmovedin_ACSOWNER</td>
-      <td>2019 Owner Households (ACS 5-Yr)</td>
-      <td>2015-2019</td>
-      <td>count</td>
-    </tr>
-    <tr>
-      <th>18397</th>
-      <td>MOEOWNER</td>
-      <td>2019 Owner Households MOE (ACS 5-Yr)</td>
-      <td>yearmovedin</td>
-      <td>yearmovedin.MOEOWNER</td>
-      <td>yearmovedin_MOEOWNER</td>
-      <td>2019 Owner Households MOE (ACS 5-Yr)</td>
-      <td>2015-2019</td>
-      <td>count</td>
-    </tr>
-    <tr>
-      <th>18398</th>
-      <td>RELOWNER</td>
-      <td>2019 Owner Households REL (ACS 5-Yr)</td>
-      <td>yearmovedin</td>
-      <td>yearmovedin.RELOWNER</td>
-      <td>yearmovedin_RELOWNER</td>
-      <td>2019 Owner Households REL (ACS 5-Yr)</td>
-      <td>2015-2019</td>
-      <td>count</td>
-    </tr>
-  </tbody>
-</table>
-<p>18399 rows × 8 columns</p>
-</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;Country - USA (GIS @ https://www.arcgis.com version:9.1)&gt;</pre>
 </div>
 
 </div>
@@ -13928,7 +13731,8 @@ a.anchor-link {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Local-Enrich-Variable-Introspection">Local Enrich Variable Introspection<a class="anchor-link" href="#Local-Enrich-Variable-Introspection">&#182;</a></h3>
+<h3 id="Local-Coutntry-with-Year-Instantiation">Local Coutntry with Year Instantiation<a class="anchor-link" href="#Local-Coutntry-with-Year-Instantiation">&#182;</a></h3><p>With a local source, there is also periodically a need to explicitly access older data. Explicitly setting the year is supported using the <code>year</code> parameter.</p>
+
 </div>
 </div>
 </div><div class="fragment">
@@ -13937,7 +13741,9 @@ a.anchor-link {
 <div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">usa_lcl</span><span class="o">.</span><span class="n">enrich_variables</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">usa_lcl_2019</span> <span class="o">=</span> <span class="n">ba_lcl</span><span class="o">.</span><span class="n">get_country</span><span class="p">(</span><span class="s1">&#39;USA&#39;</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="mi">2019</span><span class="p">)</span>
+
+<span class="n">usa_lcl_2019</span>
 </pre></div>
 
     </div>
@@ -13951,6 +13757,54 @@ a.anchor-link {
 <div class="output_area">
 
     <div class="prompt output_prompt">Out[9]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;Country - USA 2019 (local)&gt;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div></div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Enrich-Variable-Introspection">Enrich Variable Introspection<a class="anchor-link" href="#Enrich-Variable-Introspection">&#182;</a></h2><p>Once a country is instantiated, data available for enrichment can be discovered through the <code>Country</code> object instance. Whether the source is local or a GIS instance, the method is identical.</p>
+
+</div>
+</div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Local-Variable-Introspection">Local Variable Introspection<a class="anchor-link" href="#Local-Variable-Introspection">&#182;</a></h3>
+</div>
+</div>
+</div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">usa_lcl</span><span class="o">.</span><span class="n">variables</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[10]:</div>
 
 
 
@@ -14084,16 +13938,16 @@ a.anchor-link {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Local-2019-Enrich-Variable-Introspection">Local 2019 Enrich Variable Introspection<a class="anchor-link" href="#Local-2019-Enrich-Variable-Introspection">&#182;</a></h3>
+<h3 id="Web-GIS-Variable-Introspection">Web GIS Variable Introspection<a class="anchor-link" href="#Web-GIS-Variable-Introspection">&#182;</a></h3>
 </div>
 </div>
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">usa_lcl_2019</span><span class="o">.</span><span class="n">enrich_variables</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">usa_gis</span><span class="o">.</span><span class="n">variables</span>
 </pre></div>
 
     </div>
@@ -14106,7 +13960,7 @@ a.anchor-link {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[10]:</div>
+    <div class="prompt output_prompt">Out[11]:</div>
 
 
 
@@ -14134,48 +13988,66 @@ a.anchor-link {
       <th>data_collection</th>
       <th>enrich_name</th>
       <th>enrich_field_name</th>
+      <th>description</th>
+      <th>vintage</th>
+      <th>units</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>CHILD_CY</td>
-      <td>2019 Child Population</td>
-      <td>AgeDependency</td>
-      <td>AgeDependency.CHILD_CY</td>
-      <td>AgeDependency_CHILD_CY</td>
+      <td>AGE0_CY</td>
+      <td>2020 Population Age &lt;1</td>
+      <td>1yearincrements</td>
+      <td>1yearincrements.AGE0_CY</td>
+      <td>F1yearincrements_AGE0_CY</td>
+      <td>2020 Total Population Age &lt;1 (Esri)</td>
+      <td>2020</td>
+      <td>count</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>WORKAGE_CY</td>
-      <td>2019 Working-age Population</td>
-      <td>AgeDependency</td>
-      <td>AgeDependency.WORKAGE_CY</td>
-      <td>AgeDependency_WORKAGE_CY</td>
+      <td>AGE1_CY</td>
+      <td>2020 Population Age 1</td>
+      <td>1yearincrements</td>
+      <td>1yearincrements.AGE1_CY</td>
+      <td>F1yearincrements_AGE1_CY</td>
+      <td>2020 Total Population Age 1 (Esri)</td>
+      <td>2020</td>
+      <td>count</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>SENIOR_CY</td>
-      <td>2019 Senior Population</td>
-      <td>AgeDependency</td>
-      <td>AgeDependency.SENIOR_CY</td>
-      <td>AgeDependency_SENIOR_CY</td>
+      <td>AGE2_CY</td>
+      <td>2020 Population Age 2</td>
+      <td>1yearincrements</td>
+      <td>1yearincrements.AGE2_CY</td>
+      <td>F1yearincrements_AGE2_CY</td>
+      <td>2020 Total Population Age 2 (Esri)</td>
+      <td>2020</td>
+      <td>count</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>CHLDDEP_CY</td>
-      <td>2019 Child Dependency Ratio</td>
-      <td>AgeDependency</td>
-      <td>AgeDependency.CHLDDEP_CY</td>
-      <td>AgeDependency_CHLDDEP_CY</td>
+      <td>AGE3_CY</td>
+      <td>2020 Population Age 3</td>
+      <td>1yearincrements</td>
+      <td>1yearincrements.AGE3_CY</td>
+      <td>F1yearincrements_AGE3_CY</td>
+      <td>2020 Total Population Age 3 (Esri)</td>
+      <td>2020</td>
+      <td>count</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>AGEDEP_CY</td>
-      <td>2019 Age Dependency Ratio</td>
-      <td>AgeDependency</td>
-      <td>AgeDependency.AGEDEP_CY</td>
-      <td>AgeDependency_AGEDEP_CY</td>
+      <td>AGE4_CY</td>
+      <td>2020 Population Age 4</td>
+      <td>1yearincrements</td>
+      <td>1yearincrements.AGE4_CY</td>
+      <td>F1yearincrements_AGE4_CY</td>
+      <td>2020 Total Population Age 4 (Esri)</td>
+      <td>2020</td>
+      <td>count</td>
     </tr>
     <tr>
       <th>...</th>
@@ -14184,50 +14056,68 @@ a.anchor-link {
       <td>...</td>
       <td>...</td>
       <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
     </tr>
     <tr>
-      <th>16906</th>
+      <th>37</th>
       <td>MOEMEDYRMV</td>
-      <td>MOE Median Year Householder Moved In</td>
+      <td>2019 Median Year Householder Moved In MOE (ACS...</td>
       <td>yearmovedin</td>
       <td>yearmovedin.MOEMEDYRMV</td>
       <td>yearmovedin_MOEMEDYRMV</td>
+      <td>2019 Median Year Householder Moved into Unit M...</td>
+      <td>2015-2019</td>
+      <td>count</td>
     </tr>
     <tr>
-      <th>16907</th>
+      <th>38</th>
       <td>RELMEDYRMV</td>
-      <td>REL Median Year Householder Moved In</td>
+      <td>2019 Median Year Householder Moved In REL (ACS...</td>
       <td>yearmovedin</td>
       <td>yearmovedin.RELMEDYRMV</td>
       <td>yearmovedin_RELMEDYRMV</td>
+      <td>2019 Median Year Householder Moved into Unit R...</td>
+      <td>2015-2019</td>
+      <td>count</td>
     </tr>
     <tr>
-      <th>16908</th>
+      <th>39</th>
       <td>ACSOWNER</td>
-      <td>ACS Owner Households</td>
+      <td>2019 Owner Households (ACS 5-Yr)</td>
       <td>yearmovedin</td>
       <td>yearmovedin.ACSOWNER</td>
       <td>yearmovedin_ACSOWNER</td>
+      <td>2019 Owner Households (ACS 5-Yr)</td>
+      <td>2015-2019</td>
+      <td>count</td>
     </tr>
     <tr>
-      <th>16909</th>
+      <th>40</th>
       <td>MOEOWNER</td>
-      <td>MOE Owner Households</td>
+      <td>2019 Owner Households MOE (ACS 5-Yr)</td>
       <td>yearmovedin</td>
       <td>yearmovedin.MOEOWNER</td>
       <td>yearmovedin_MOEOWNER</td>
+      <td>2019 Owner Households MOE (ACS 5-Yr)</td>
+      <td>2015-2019</td>
+      <td>count</td>
     </tr>
     <tr>
-      <th>16910</th>
+      <th>41</th>
       <td>RELOWNER</td>
-      <td>REL Owner Households</td>
+      <td>2019 Owner Households REL (ACS 5-Yr)</td>
       <td>yearmovedin</td>
       <td>yearmovedin.RELOWNER</td>
       <td>yearmovedin_RELOWNER</td>
+      <td>2019 Owner Households REL (ACS 5-Yr)</td>
+      <td>2015-2019</td>
+      <td>count</td>
     </tr>
   </tbody>
 </table>
-<p>16911 rows × 5 columns</p>
+<p>18399 rows × 8 columns</p>
 </div>
 </div>
 
@@ -14240,7 +14130,7 @@ a.anchor-link {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Usefulness-of-a-DataFrame">Usefulness of a DataFrame<a class="anchor-link" href="#Usefulness-of-a-DataFrame">&#182;</a></h3><p>Since working with a Pandas DataFrame, this facilitates quick discovery of different variable combinations.</p>
+<h2 id="Selecting-Variables-for-Enrichment">Selecting Variables for Enrichment<a class="anchor-link" href="#Selecting-Variables-for-Enrichment">&#182;</a></h2><p>Since a Pandas DataFrame, this facilitates quick discovery of different variable combinations based on analysis needs.</p>
 
 </div>
 </div>
@@ -14248,17 +14138,19 @@ a.anchor-link {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Unique-Variables">Unique Variables<a class="anchor-link" href="#Unique-Variables">&#182;</a></h4><p>Since variables can be repeated due to being used in multiple Data Collections, we can easily remove duplicates using the functionality of the DataFrame.</p>
+<h3 id="Unique-Variables">Unique Variables<a class="anchor-link" href="#Unique-Variables">&#182;</a></h3><p>Since variables can be repeated due to being used in multiple Data Collections, we can easily remove duplicates using the functionality of the DataFrame.</p>
 
 </div>
 </div>
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">usa_lcl</span><span class="o">.</span><span class="n">enrich_variables</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">uniq_df</span> <span class="o">=</span> <span class="n">usa_lcl</span><span class="o">.</span><span class="n">variables</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">uniq_df</span>
 </pre></div>
 
     </div>
@@ -14271,7 +14163,7 @@ a.anchor-link {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[11]:</div>
+    <div class="prompt output_prompt">Out[12]:</div>
 
 
 
@@ -14405,17 +14297,17 @@ a.anchor-link {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Unique-Current-Year-Variables">Unique Current Year Variables<a class="anchor-link" href="#Unique-Current-Year-Variables">&#182;</a></h4><p>One of the things I like to do is grab all the current year demographics. Due to the naming convention, all of these variables' names end with <code>CY</code>. This enables us to quickly find them.</p>
+<h3 id="Unique-Current-Year-Variables">Unique Current Year Variables<a class="anchor-link" href="#Unique-Current-Year-Variables">&#182;</a></h3><p>One of the things I like to do is grab all the current year demographics. Due to the naming convention, all of these variables' names end with <code>CY</code>. This enables us to quickly find them.</p>
 
 </div>
 </div>
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">uniq_df</span> <span class="o">=</span> <span class="n">usa_lcl</span><span class="o">.</span><span class="n">enrich_variables</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">uniq_df</span> <span class="o">=</span> <span class="n">usa_lcl</span><span class="o">.</span><span class="n">variables</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="n">cy_df</span> <span class="o">=</span> <span class="n">uniq_df</span><span class="p">[</span><span class="n">uniq_df</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;CY&#39;</span><span class="p">)]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
@@ -14432,7 +14324,7 @@ a.anchor-link {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[12]:</div>
+    <div class="prompt output_prompt">Out[13]:</div>
 
 
 
@@ -14566,21 +14458,21 @@ a.anchor-link {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Current-Year-Sample-Variables">Current Year Sample Variables<a class="anchor-link" href="#Current-Year-Sample-Variables">&#182;</a></h4><p>Frequently, when demonstrating analysis ad-hoc quickly, I take advantage of Data Collections to grab a few useful variables, current year income and population.</p>
+<h3 id="Current-Year-Sample-Variables">Current Year Sample Variables<a class="anchor-link" href="#Current-Year-Sample-Variables">&#182;</a></h3><p>Frequently, when demonstrating analysis ad-hoc quickly, I take advantage of Data Collections to grab a few useful current year variables.</p>
 
 </div>
 </div>
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">var_df</span> <span class="o">=</span> <span class="n">usa_lcl</span><span class="o">.</span><span class="n">enrich_variables</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">var_df</span> <span class="o">=</span> <span class="n">usa_lcl</span><span class="o">.</span><span class="n">variables</span>
 
-<span class="n">smpl_df</span> <span class="o">=</span> <span class="n">uniq_df</span><span class="p">[</span>
-    <span class="p">(</span><span class="n">uniq_df</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;CY&#39;</span><span class="p">))</span>
-    <span class="o">&amp;</span> <span class="p">((</span><span class="n">uniq_df</span><span class="p">[</span><span class="s1">&#39;data_collection&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;incomebyage&#39;</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">uniq_df</span><span class="p">[</span><span class="s1">&#39;data_collection&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;population&#39;</span><span class="p">))</span>
+<span class="n">smpl_df</span> <span class="o">=</span> <span class="n">var_df</span><span class="p">[</span>
+    <span class="p">(</span><span class="n">var_df</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;CY&#39;</span><span class="p">))</span>
+    <span class="o">&amp;</span> <span class="p">((</span><span class="n">var_df</span><span class="p">[</span><span class="s1">&#39;data_collection&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;incomebyage&#39;</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">var_df</span><span class="p">[</span><span class="s1">&#39;data_collection&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;population&#39;</span><span class="p">))</span>
 <span class="p">]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="n">smpl_df</span>
@@ -14596,7 +14488,7 @@ a.anchor-link {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[13]:</div>
+    <div class="prompt output_prompt">Out[14]:</div>
 
 
 
@@ -14676,23 +14568,23 @@ a.anchor-link {
       <td>...</td>
     </tr>
     <tr>
-      <th>90</th>
-      <td>IA75BASECY</td>
-      <td>2020 HH Income Base: HHr 75+</td>
+      <th>93</th>
+      <td>MEDIA55UCY</td>
+      <td>2020 Median HH Inc: HHr 55+</td>
       <td>incomebyage</td>
-      <td>incomebyage.IA75BASECY</td>
-      <td>incomebyage_IA75BASECY</td>
+      <td>incomebyage.MEDIA55UCY</td>
+      <td>incomebyage_MEDIA55UCY</td>
     </tr>
     <tr>
-      <th>91</th>
-      <td>MEDHHR_CY</td>
-      <td>2020 Median Age of Householder</td>
+      <th>94</th>
+      <td>AVGIA55UCY</td>
+      <td>2020 Avg HH Income: HHr 55+</td>
       <td>incomebyage</td>
-      <td>incomebyage.MEDHHR_CY</td>
-      <td>incomebyage_MEDHHR_CY</td>
+      <td>incomebyage.AVGIA55UCY</td>
+      <td>incomebyage_AVGIA55UCY</td>
     </tr>
     <tr>
-      <th>92</th>
+      <th>95</th>
       <td>IA65UBASCY</td>
       <td>2020 HHs by Inc Base: HHr 65+</td>
       <td>incomebyage</td>
@@ -14700,7 +14592,7 @@ a.anchor-link {
       <td>incomebyage_IA65UBASCY</td>
     </tr>
     <tr>
-      <th>93</th>
+      <th>96</th>
       <td>MEDIA65UCY</td>
       <td>2020 Median HH Inc: HHr 65+</td>
       <td>incomebyage</td>
@@ -14708,7 +14600,7 @@ a.anchor-link {
       <td>incomebyage_MEDIA65UCY</td>
     </tr>
     <tr>
-      <th>94</th>
+      <th>97</th>
       <td>AVGIA65UCY</td>
       <td>2020 Avg HH Income: HHr 65+</td>
       <td>incomebyage</td>
@@ -14717,7 +14609,7 @@ a.anchor-link {
     </tr>
   </tbody>
 </table>
-<p>95 rows × 5 columns</p>
+<p>98 rows × 5 columns</p>
 </div>
 </div>
 
@@ -14730,7 +14622,7 @@ a.anchor-link {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Enrichment">Enrichment<a class="anchor-link" href="#Enrichment">&#182;</a></h2><p>The Python API already includes a wrapper around the enrich REST endpoint enabling enrichment using a GIS source. The ArcGIS Pro GeoProcessing Enrich Layer tool currently is the only way to enrich data using local resources. Each requires the variable input in a slightly different format.</p>
+<h2 id="Enrichment">Enrichment<a class="anchor-link" href="#Enrichment">&#182;</a></h2><p>The Python API already includes a wrapper around the enrich REST endpoint. The ArcGIS Pro GeoProcessing Enrich Layer tool currently is the only way to enrich data using local resources. Each requires the variable input in a slightly different format.</p>
 
 </div>
 </div>
@@ -14745,17 +14637,10 @@ a.anchor-link {
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">var_df</span> <span class="o">=</span> <span class="n">usa_lcl</span><span class="o">.</span><span class="n">enrich_variables</span>
-
-<span class="n">smpl_df</span> <span class="o">=</span> <span class="n">uniq_df</span><span class="p">[</span>
-    <span class="p">(</span><span class="n">uniq_df</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;CY&#39;</span><span class="p">))</span>
-    <span class="o">&amp;</span> <span class="p">((</span><span class="n">uniq_df</span><span class="p">[</span><span class="s1">&#39;data_collection&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;incomebyage&#39;</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">uniq_df</span><span class="p">[</span><span class="s1">&#39;data_collection&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;population&#39;</span><span class="p">))</span>
-<span class="p">]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="n">enrich_str</span> <span class="o">=</span> <span class="s1">&#39;;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">smpl_df</span><span class="o">.</span><span class="n">enrich_name</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">enrich_str</span> <span class="o">=</span> <span class="s1">&#39;;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">smpl_df</span><span class="o">.</span><span class="n">enrich_name</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">enrich_str</span><span class="p">)</span>
 </pre></div>
@@ -14774,7 +14659,7 @@ a.anchor-link {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>incomebyage.A15I0_CY;incomebyage.A15I15_CY;incomebyage.A15I25_CY;incomebyage.A15I35_CY;incomebyage.A15I50_CY;incomebyage.A15I75_CY;incomebyage.A15I100_CY;incomebyage.A15I150_CY;incomebyage.A15I200_CY;incomebyage.MEDIA15_CY;incomebyage.AVGIA15_CY;incomebyage.AGGIA15_CY;incomebyage.IA15BASECY;incomebyage.A25I0_CY;incomebyage.A25I15_CY;incomebyage.A25I25_CY;incomebyage.A25I35_CY;incomebyage.A25I50_CY;incomebyage.A25I75_CY;incomebyage.A25I100_CY;incomebyage.A25I150_CY;incomebyage.A25I200_CY;incomebyage.MEDIA25_CY;incomebyage.AVGIA25_CY;incomebyage.AGGIA25_CY;incomebyage.IA25BASECY;incomebyage.A35I0_CY;incomebyage.A35I15_CY;incomebyage.A35I25_CY;incomebyage.A35I35_CY;incomebyage.A35I50_CY;incomebyage.A35I75_CY;incomebyage.A35I100_CY;incomebyage.A35I150_CY;incomebyage.A35I200_CY;incomebyage.MEDIA35_CY;incomebyage.AVGIA35_CY;incomebyage.AGGIA35_CY;incomebyage.IA35BASECY;incomebyage.A45I0_CY;incomebyage.A45I15_CY;incomebyage.A45I25_CY;incomebyage.A45I35_CY;incomebyage.A45I50_CY;incomebyage.A45I75_CY;incomebyage.A45I100_CY;incomebyage.A45I150_CY;incomebyage.A45I200_CY;incomebyage.MEDIA45_CY;incomebyage.AVGIA45_CY;incomebyage.AGGIA45_CY;incomebyage.IA45BASECY;incomebyage.A55I0_CY;incomebyage.A55I15_CY;incomebyage.A55I25_CY;incomebyage.A55I35_CY;incomebyage.A55I50_CY;incomebyage.A55I75_CY;incomebyage.A55I100_CY;incomebyage.A55I150_CY;incomebyage.A55I200_CY;incomebyage.MEDIA55_CY;incomebyage.AVGIA55_CY;incomebyage.AGGIA55_CY;incomebyage.IA55BASECY;incomebyage.A65I0_CY;incomebyage.A65I15_CY;incomebyage.A65I25_CY;incomebyage.A65I35_CY;incomebyage.A65I50_CY;incomebyage.A65I75_CY;incomebyage.A65I100_CY;incomebyage.A65I150_CY;incomebyage.A65I200_CY;incomebyage.MEDIA65_CY;incomebyage.AVGIA65_CY;incomebyage.AGGIA65_CY;incomebyage.IA65BASECY;incomebyage.A75I0_CY;incomebyage.A75I15_CY;incomebyage.A75I25_CY;incomebyage.A75I35_CY;incomebyage.A75I50_CY;incomebyage.A75I75_CY;incomebyage.A75I100_CY;incomebyage.A75I150_CY;incomebyage.A75I200_CY;incomebyage.MEDIA75_CY;incomebyage.AVGIA75_CY;incomebyage.AGGIA75_CY;incomebyage.IA75BASECY;incomebyage.MEDHHR_CY;incomebyage.IA65UBASCY;incomebyage.MEDIA65UCY;incomebyage.AVGIA65UCY
+<pre>incomebyage.A15I0_CY;incomebyage.A15I15_CY;incomebyage.A15I25_CY;incomebyage.A15I35_CY;incomebyage.A15I50_CY;incomebyage.A15I75_CY;incomebyage.A15I100_CY;incomebyage.A15I150_CY;incomebyage.A15I200_CY;incomebyage.MEDIA15_CY;incomebyage.AVGIA15_CY;incomebyage.AGGIA15_CY;incomebyage.IA15BASECY;incomebyage.A25I0_CY;incomebyage.A25I15_CY;incomebyage.A25I25_CY;incomebyage.A25I35_CY;incomebyage.A25I50_CY;incomebyage.A25I75_CY;incomebyage.A25I100_CY;incomebyage.A25I150_CY;incomebyage.A25I200_CY;incomebyage.MEDIA25_CY;incomebyage.AVGIA25_CY;incomebyage.AGGIA25_CY;incomebyage.IA25BASECY;incomebyage.A35I0_CY;incomebyage.A35I15_CY;incomebyage.A35I25_CY;incomebyage.A35I35_CY;incomebyage.A35I50_CY;incomebyage.A35I75_CY;incomebyage.A35I100_CY;incomebyage.A35I150_CY;incomebyage.A35I200_CY;incomebyage.MEDIA35_CY;incomebyage.AVGIA35_CY;incomebyage.AGGIA35_CY;incomebyage.IA35BASECY;incomebyage.A45I0_CY;incomebyage.A45I15_CY;incomebyage.A45I25_CY;incomebyage.A45I35_CY;incomebyage.A45I50_CY;incomebyage.A45I75_CY;incomebyage.A45I100_CY;incomebyage.A45I150_CY;incomebyage.A45I200_CY;incomebyage.MEDIA45_CY;incomebyage.AVGIA45_CY;incomebyage.AGGIA45_CY;incomebyage.IA45BASECY;incomebyage.A55I0_CY;incomebyage.A55I15_CY;incomebyage.A55I25_CY;incomebyage.A55I35_CY;incomebyage.A55I50_CY;incomebyage.A55I75_CY;incomebyage.A55I100_CY;incomebyage.A55I150_CY;incomebyage.A55I200_CY;incomebyage.MEDIA55_CY;incomebyage.AVGIA55_CY;incomebyage.AGGIA55_CY;incomebyage.IA55BASECY;incomebyage.A65I0_CY;incomebyage.A65I15_CY;incomebyage.A65I25_CY;incomebyage.A65I35_CY;incomebyage.A65I50_CY;incomebyage.A65I75_CY;incomebyage.A65I100_CY;incomebyage.A65I150_CY;incomebyage.A65I200_CY;incomebyage.MEDIA65_CY;incomebyage.AVGIA65_CY;incomebyage.AGGIA65_CY;incomebyage.IA65BASECY;incomebyage.A75I0_CY;incomebyage.A75I15_CY;incomebyage.A75I25_CY;incomebyage.A75I35_CY;incomebyage.A75I50_CY;incomebyage.A75I75_CY;incomebyage.A75I100_CY;incomebyage.A75I150_CY;incomebyage.A75I200_CY;incomebyage.MEDIA75_CY;incomebyage.AVGIA75_CY;incomebyage.AGGIA75_CY;incomebyage.IA75BASECY;incomebyage.MEDHHR_CY;incomebyage.IA55UBASCY;incomebyage.MEDIA55UCY;incomebyage.AVGIA55UCY;incomebyage.IA65UBASCY;incomebyage.MEDIA65UCY;incomebyage.AVGIA65UCY
 </pre>
 </div>
 </div>
@@ -14793,17 +14678,10 @@ a.anchor-link {
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">var_df</span> <span class="o">=</span> <span class="n">usa_gis</span><span class="o">.</span><span class="n">enrich_variables</span>
-
-<span class="n">smpl_df</span> <span class="o">=</span> <span class="n">uniq_df</span><span class="p">[</span>
-    <span class="p">(</span><span class="n">uniq_df</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;CY&#39;</span><span class="p">))</span>
-    <span class="o">&amp;</span> <span class="p">((</span><span class="n">uniq_df</span><span class="p">[</span><span class="s1">&#39;data_collection&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;incomebyage&#39;</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">uniq_df</span><span class="p">[</span><span class="s1">&#39;data_collection&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;population&#39;</span><span class="p">))</span>
-<span class="p">]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="n">enrich_str</span> <span class="o">=</span> <span class="s1">&#39;;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">smpl_df</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">enrich_str</span> <span class="o">=</span> <span class="s1">&#39;;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">smpl_df</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">enrich_str</span><span class="p">)</span>
 </pre></div>
@@ -14822,7 +14700,7 @@ a.anchor-link {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>A15I0_CY;A15I15_CY;A15I25_CY;A15I35_CY;A15I50_CY;A15I75_CY;A15I100_CY;A15I150_CY;A15I200_CY;MEDIA15_CY;AVGIA15_CY;AGGIA15_CY;IA15BASECY;A25I0_CY;A25I15_CY;A25I25_CY;A25I35_CY;A25I50_CY;A25I75_CY;A25I100_CY;A25I150_CY;A25I200_CY;MEDIA25_CY;AVGIA25_CY;AGGIA25_CY;IA25BASECY;A35I0_CY;A35I15_CY;A35I25_CY;A35I35_CY;A35I50_CY;A35I75_CY;A35I100_CY;A35I150_CY;A35I200_CY;MEDIA35_CY;AVGIA35_CY;AGGIA35_CY;IA35BASECY;A45I0_CY;A45I15_CY;A45I25_CY;A45I35_CY;A45I50_CY;A45I75_CY;A45I100_CY;A45I150_CY;A45I200_CY;MEDIA45_CY;AVGIA45_CY;AGGIA45_CY;IA45BASECY;A55I0_CY;A55I15_CY;A55I25_CY;A55I35_CY;A55I50_CY;A55I75_CY;A55I100_CY;A55I150_CY;A55I200_CY;MEDIA55_CY;AVGIA55_CY;AGGIA55_CY;IA55BASECY;A65I0_CY;A65I15_CY;A65I25_CY;A65I35_CY;A65I50_CY;A65I75_CY;A65I100_CY;A65I150_CY;A65I200_CY;MEDIA65_CY;AVGIA65_CY;AGGIA65_CY;IA65BASECY;A75I0_CY;A75I15_CY;A75I25_CY;A75I35_CY;A75I50_CY;A75I75_CY;A75I100_CY;A75I150_CY;A75I200_CY;MEDIA75_CY;AVGIA75_CY;AGGIA75_CY;IA75BASECY;MEDHHR_CY;IA65UBASCY;MEDIA65UCY;AVGIA65UCY
+<pre>A15I0_CY;A15I15_CY;A15I25_CY;A15I35_CY;A15I50_CY;A15I75_CY;A15I100_CY;A15I150_CY;A15I200_CY;MEDIA15_CY;AVGIA15_CY;AGGIA15_CY;IA15BASECY;A25I0_CY;A25I15_CY;A25I25_CY;A25I35_CY;A25I50_CY;A25I75_CY;A25I100_CY;A25I150_CY;A25I200_CY;MEDIA25_CY;AVGIA25_CY;AGGIA25_CY;IA25BASECY;A35I0_CY;A35I15_CY;A35I25_CY;A35I35_CY;A35I50_CY;A35I75_CY;A35I100_CY;A35I150_CY;A35I200_CY;MEDIA35_CY;AVGIA35_CY;AGGIA35_CY;IA35BASECY;A45I0_CY;A45I15_CY;A45I25_CY;A45I35_CY;A45I50_CY;A45I75_CY;A45I100_CY;A45I150_CY;A45I200_CY;MEDIA45_CY;AVGIA45_CY;AGGIA45_CY;IA45BASECY;A55I0_CY;A55I15_CY;A55I25_CY;A55I35_CY;A55I50_CY;A55I75_CY;A55I100_CY;A55I150_CY;A55I200_CY;MEDIA55_CY;AVGIA55_CY;AGGIA55_CY;IA55BASECY;A65I0_CY;A65I15_CY;A65I25_CY;A65I35_CY;A65I50_CY;A65I75_CY;A65I100_CY;A65I150_CY;A65I200_CY;MEDIA65_CY;AVGIA65_CY;AGGIA65_CY;IA65BASECY;A75I0_CY;A75I15_CY;A75I25_CY;A75I35_CY;A75I50_CY;A75I75_CY;A75I100_CY;A75I150_CY;A75I200_CY;MEDIA75_CY;AVGIA75_CY;AGGIA75_CY;IA75BASECY;MEDHHR_CY;IA55UBASCY;MEDIA55UCY;AVGIA55UCY;IA65UBASCY;MEDIA65UCY;AVGIA65UCY
 </pre>
 </div>
 </div>
@@ -14834,11 +14712,26 @@ a.anchor-link {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Next-Step---Enrich-Method">Next Step - Enrich Method<a class="anchor-link" href="#Next-Step---Enrich-Method">&#182;</a></h2><p>The next step is updating the Python API <code>enrich</code> method to support both local and remote resources, and handle the variable introspection dataframes as input. This will enable a single workflow for discovering what data is available and retrieving the data whether the data is being retrieved from a local or GIS source.</p>
+<h2 id="Next-Step---Enrich-Method">Next Step - Enrich Method<a class="anchor-link" href="#Next-Step---Enrich-Method">&#182;</a></h2><p>The next step is adding <code>enrich</code> method to support both local and remote resources, and handle the variable introspection dataframes as input. This enables a single workflow for discovering what data is available and retrieving the data whether the data is being retrieved from a local or Web GIS source.</p>
 
 </div>
 </div>
-</div></section></section>
+</div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># currently does NOT run...but soon!</span>
+<span class="n">enrich_lcl_df</span> <span class="o">=</span> <span class="n">usa_lcl</span><span class="o">.</span><span class="n">enrich</span><span class="p">(</span><span class="n">smpl_df</span><span class="p">)</span>
+<span class="n">enrich_gis_df</span> <span class="o">=</span> <span class="n">usa_gis</span><span class="o">.</span><span class="n">enrich</span><span class="p">(</span><span class="n">smpl_df</span><span class="p">)</span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div></div></section></section>
 </div>
 </div>
 
